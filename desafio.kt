@@ -1,21 +1,50 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
+class Users(val name: String, var hoursCompleted: Int)
 
-enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
+data class EducacionalContent(var name: String, var duration: Int)
 
-class Usuario
-
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
-
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
-
-    val inscritos = mutableListOf<Usuario>()
+class Training() {
     
-    fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+    val registered = mutableListOf<Users>()
+    
+    fun enroll(student: Users, content: EducacionalContent) {
+        registered.add(student)
+       	student.hoursCompleted += content.duration
+        println("Student ${student.name} enrolled in the ${content.name} with ${content.duration} hours")
+    }
+    
+    fun viewStudentEnrolled() {
+        for (students in registered) {
+            println("${students.name}")
+        }
+    }
+    
+    fun viewStudentLevel(student: Users): String {
+        if (student.hoursCompleted <= 3) {
+            return "Basic"
+        }
+        if (student.hoursCompleted <= 6) {
+            return "Intermediate"
+        } else {
+            return "Advanced"
+        }
+    }
+    
+    fun showStudentData(student: Users): Unit {
+        println("Name: ${student.name}, Level: ${viewStudentLevel(student)}")
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val student1 = Users("Gabriel", 0)
+    
+    val educationalContent1 = EducacionalContent("Basic Kotlin course", 3)
+    val educationalContent2 = EducacionalContent("Java and Spring Boot course", 5)
+    
+    var training1 = Training()
+    
+    training1.enroll(student1, educationalContent1)
+    training1.showStudentData(student1)
+    
+    training1.enroll(student1, educationalContent2)
+    training1.showStudentData(student1)
 }
